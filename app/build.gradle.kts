@@ -19,7 +19,7 @@ android {
             useSupportLibrary = true
         }
     }
-
+    sourceSets["main"].jniLibs.srcDir("libs")
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -46,6 +46,8 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+        resources.pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
+        resources.pickFirsts.add("lib/armeabi-v7a/libc++_shared.so")
     }
 }
 
@@ -66,4 +68,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+    implementation(files("libs/FaceSDK.jar"))
 }
